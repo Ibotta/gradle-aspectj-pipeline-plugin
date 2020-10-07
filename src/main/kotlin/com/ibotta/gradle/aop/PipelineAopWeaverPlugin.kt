@@ -200,7 +200,13 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
                     project.javaCompileTask(variantNameCapitalized).classpath,
                     preWeaveJavaDir.get().asFile,
                     preWeaveKotlinDir.get().asFile
-                ).filter { file ->
+                )
+                .also {
+                    if (extension.filter.isNotEmpty()) {
+                        project.aopLog("Weaving filter in ${project.name} is: ${extension.filter}")
+                    }
+                }
+                .filter { file ->
                     file.canonicalPath.contains(extension.filter)
                 }
             }
