@@ -1,0 +1,16 @@
+# Gradle
+.gradle/
+
+# generated files
+build/
+out/
+local.properties
+
+# Mac
+.DS_Store
+
+#intellij
+*.iml
+*.ipr
+*.iws
+.idea/

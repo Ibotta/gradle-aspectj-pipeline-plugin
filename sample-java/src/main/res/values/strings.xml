@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Java Example</string>
+    <string name="button_java">Click to trigger Java AOP hook</string>
+</resources>
