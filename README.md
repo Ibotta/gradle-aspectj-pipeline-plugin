@@ -28,6 +28,8 @@ Our requirements were simple. *We needed a tool that could perform AspectJ weavi
 
 At the start of this project, we had little to no experience writing Gradle Plugins. We were fortunate enough to have a relationship with some members of the Gradle team, who aided us in accomplishing our goals. Rather than fumble our way to a solution, we ended up with one that was guided by the Gradle team's expertise in their own tooling.
 
+For a more in-depth look at our journey, visit our blog post: https://medium.com/building-ibotta/ibottas-solution-for-aop-weaving-on-android-944a432294c5
+
 # How Is This Implementation Different?
 This plugin leverages a mechanism in the Android build which we were introduced to as the "bytecode manipulation pipeline". Essentially, the plugin registers itself with the build as something that will manipulate bytecode, thus making it a formal part of the overall build. Unfortunately, documentation on this mechanism seems to be scarce. The relevant hook for doing this registration can be found here, though: https://android.googlesource.com/platform/tools/base/+/refs/heads/mirror-goog-studio-master-dev/build-system/gradle-core/src/main/java/com/android/build/gradle/api/BaseVariant.java#600
 
