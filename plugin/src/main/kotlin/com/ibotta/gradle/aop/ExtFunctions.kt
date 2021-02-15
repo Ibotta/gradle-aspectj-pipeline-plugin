@@ -11,6 +11,7 @@ import org.gradle.api.tasks.compile.AbstractCompile
 import org.gradle.testing.jacoco.tasks.JacocoReport
 import java.io.File
 
+private const val KAPT_TASK_TEMPLATE = "kapt%sKotlin"
 private const val JAVA_COMPILE_TASK_TEMPLATE = "compile%sJavaWithJavac"
 private const val KOTLIN_COMPILE_TASK_TEMPLATE = "compile%sKotlin"
 private const val JACOCO_REPORT_TASK_TEMPLATE = "jacocoTest%sUnitTestReport"
@@ -35,6 +36,9 @@ private fun Project.compileTask(taskName: String): AbstractCompile? {
         null
     }
 }
+
+fun Project.kaptTaskProvider(variantName: String) =
+    tasks.namedOrNull(KAPT_TASK_TEMPLATE.format(variantName))
 
 fun Project.javaCompileTaskProvider(variantName: String) =
     tasks.namedOrNull(JAVA_COMPILE_TASK_TEMPLATE.format(variantName))
