@@ -49,7 +49,7 @@ buildscript {
 
 	dependencies {
 		...
-		classpath "com.ibotta:plugin:1.0.7"
+		classpath "com.ibotta:plugin:1.1.0"
 		...
 	}
 }
@@ -69,7 +69,7 @@ buildscript {
 
 	dependencies {
 		...
-		classpath("com.ibotta:plugin:1.0.7")
+		classpath("com.ibotta:plugin:1.1.0")
 		...
 	}
 }
