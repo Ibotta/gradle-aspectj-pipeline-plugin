@@ -1,7 +1,4 @@
-
-[![Build Status](https://travis-ci.com/Ibotta/gradle-aspectj-pipeline-plugin.svg?token=zc5xrZhgTx8xgzKxeSun&branch=main)](https://travis-ci.com/Ibotta/gradle-aspectj-pipeline-plugin)  
-  
-# Android AspectJ Gradle Plugin
+ # Android AspectJ Gradle Plugin
 A Gradle plugin for Kotlin/Java Android projects which performs AspectJ weaving using Android's bytcode manipulation pipeline.
 
 # Table Of Contents
