@@ -1,4 +1,5 @@
- # Android AspectJ Gradle Plugin
+
+# Android AspectJ Gradle Plugin
 A Gradle plugin for Kotlin/Java Android projects which performs AspectJ weaving using Android's bytcode manipulation pipeline.
 
 # Table Of Contents
@@ -24,6 +25,9 @@ There are several libraries out there that aim to solve the problem of AspectJ w
 Our requirements were simple. *We needed a tool that could perform AspectJ weaving of our mixed Kotlin/Java Android project. And we should be able to verify that woven code is executing as expected with unit tests.*
 
 At the start of this project, we had little to no experience writing Gradle Plugins. We were fortunate enough to have a relationship with some members of the Gradle team, who aided us in accomplishing our goals. Rather than fumble our way to a solution, we ended up with one that was guided by the Gradle team's expertise in their own tooling.
+
+For a more in-depth look at our journey, visit our blog post: https://medium.com/building-ibotta/ibottas-solution-for-aop-weaving-on-android-944a432294c5
+
 
 # How Is This Implementation Different?
 This plugin leverages a mechanism in the Android build which we were introduced to as the "bytecode manipulation pipeline". Essentially, the plugin registers itself with the build as something that will manipulate bytecode, thus making it a formal part of the overall build. Unfortunately, documentation on this mechanism seems to be scarce. The relevant hook for doing this registration can be found here, though: https://android.googlesource.com/platform/tools/base/+/refs/heads/mirror-goog-studio-master-dev/build-system/gradle-core/src/main/java/com/android/build/gradle/api/BaseVariant.java#600
@@ -128,13 +132,25 @@ aopWeave {
 ...
 ```
 
+# A Note on Kotlin 1.5+, SAM Conversion, Lambdas and AOP Annotations
+As of Kotlin 1.5.0 the compiler now performs Single Abstract Method (SAM) conversions. This, unfortunately, seems to
+break certain aspects of AspectJ weaving. For an example, please see issue #8.
+
+If you have lambdas that aren't being woven correctly by AspectJ, you can work around it by using the following
+compiler option:
+
+```aidl
+kotlinOptions {
+    freeCompilerArgs = ["-Xsam-conversions=class"]
+}
+```
 
 # We Have Sample Apps!
 In this project, you will find a few sample apps that use this plugin to perform some simple AOP weaving. They include tests to help prove that the weaving occurred, and is running as expected. Maybe you have a Kotlin only project, or Java only, or a mix! We have examples of each:
 
- - [Kotlin Only Sample App](sample-kotlin)
- - [Java Only Sample App](sample-java)
- - [Mixed Java/Kotlin Sample App](sample-mixed)
+- [Kotlin Only Sample App](sample-kotlin)
+- [Java Only Sample App](sample-java)
+- [Mixed Java/Kotlin Sample App](sample-mixed)
 
 # How To Build The Project
 If you've made no code changes to the project, and simply want to build it, then you can just run the following command from the root of the project: `./gradlew build`
