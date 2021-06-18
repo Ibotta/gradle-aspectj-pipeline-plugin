@@ -139,7 +139,7 @@ break certain aspects of AspectJ weaving. For an example, please see issue #8.
 If you have lambdas that aren't being woven correctly by AspectJ, you can work around it by using the following
 compiler option:
 
-```aidl
+```
 kotlinOptions {
     freeCompilerArgs = ["-Xsam-conversions=class"]
 }
