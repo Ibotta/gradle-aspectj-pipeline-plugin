@@ -134,7 +134,7 @@ aopWeave {
 
 # A Note on Kotlin 1.5+, SAM Conversion, Lambdas and AOP Annotations
 As of Kotlin 1.5.0 the compiler now performs Single Abstract Method (SAM) conversions. This, unfortunately, seems to
-break certain aspects of AspectJ weaving. For an example, please see issue #8.
+break certain aspects of AspectJ weaving. For an example, please see issue [#8](https://github.com/Ibotta/gradle-aspectj-pipeline-plugin/issues/8).
 
 If you have lambdas that aren't being woven correctly by AspectJ, you can work around it by using the following
 compiler option:
