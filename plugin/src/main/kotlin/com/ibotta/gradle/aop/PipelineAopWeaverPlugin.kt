@@ -53,6 +53,7 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
 
         val extension = project.extensions.create(AopWeaveExtension.AOP_WEAVE_EXTENSION, AopWeaveExtension::class.java)
         val android = project.extensions.findByName(ANDROID_EXTENSION_NAME) as BaseExtension
+        project.aopLog("projectId: $$project")
         project.afterEvaluate {
             val variants = if (isAndroid or isDynamicLibrary) {
                 (android as AppExtension).applicationVariants
@@ -81,7 +82,7 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
                 val postWeaveDir = project.layout
                     .buildDirectory
                     .dir(POST_WEAVE_DIR_TEMPLATE.format(variantNameLowercase))
-
+                project.aopLog("output dir ${postWeaveDir.get().asFile.absolutePath}")
                 // Now we'll acquire the Task providers for the compilation steps, as well as our own custom weave
                 // task. Task providers allow us to tell Gradle how we will want the tasks to be configured and executed,
                 // before the tasks exists.
