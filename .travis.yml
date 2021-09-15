@@ -5,8 +5,12 @@ jdk: openjdk11
 android:
   components:
     - tools
-    - android-29
-    - build-tools-29.0.2
+    - android-30
+    - build-tools-30.0.2
+
+before_install:
+  - yes | sdkmanager "platforms;android-30"
+
 script:
   - rm -Rf $HOME/.m2/repository/com/ibotta/gradle/aop/
   - ./publishLocal.sh
