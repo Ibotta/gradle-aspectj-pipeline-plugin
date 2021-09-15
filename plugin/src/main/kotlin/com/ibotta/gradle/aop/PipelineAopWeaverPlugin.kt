@@ -5,6 +5,7 @@ import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
+import com.android.build.gradle.tasks.ExtractAnnotations
 import com.hiya.plugins.JacocoAndroidUnitTestReportExtension
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
@@ -35,6 +36,7 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
         private const val ANDROID_JAR_TEMPLATE = "%s/platforms/%s/android.jar"
         private const val PRE_WEAVE_DIR_TEMPLATE = "preWeave/%s/%s"
         private const val POST_WEAVE_DIR_TEMPLATE = "postWeave/%s"
+        private const val PATTERN_ORIGINAL_KOTLINC_OUTPUT_DIR = "tmp/kotlin-classes/"
         private const val AOP_WEAVE_TASK = "aopWeave%s"
         private const val AOP_LOG = "aop.log"
     }
@@ -90,6 +92,7 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
                 val aopWeaveProvider = project.tasks
                     .register(AOP_WEAVE_TASK.format(variantNameCapitalized), AopWeaveTask::class.java)
                 val jacocoReportTaskProvider = project.jacocoReportTaskProvider(variantNameCapitalized)
+                val extractAnnotationsTaskProvider = project.extractAnnotationsTaskProvider(variantNameCapitalized)
 
                 // Before Kapt can run, we'll need to restore any pre-weave classes from previous
                 // runs of compile tasks back into the destination directories. This is where Kapt
@@ -110,6 +113,13 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
                 // Set up the configuration for the JacocoReport task in case the build requires it.
                 if (jacocoReportTaskProvider != null) {
                     configureJacocoReportTask(jacocoReportTaskProvider, postWeaveDir)
+                }
+
+                // We may encounter an "extract<Variant>Annotations" task which expects the original
+                // Kotlin compilation directory to exist. We'll need to reconfigure it to work
+                // correctly.
+                if (extractAnnotationsTaskProvider != null) {
+                    configureExtractAnnotationsTask(extractAnnotationsTaskProvider, preWeaveKotlinDir)
                 }
 
                 // We'll need this jar for weaving.
@@ -216,6 +226,43 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
                 // excludes
                 classDirectories.setFrom(classDirectories + postWeaveFiltered)
             }
+        }
+    }
+
+    /**
+     * At some point in the 7.0.X versions of the Android Gradle Plugin changes, an
+     * "extract<Variant>Annotations" started appearing to run just after Kotlin compilation. This
+     * task started to fail, as it no longer could find the
+     * "<project>/build/tmp/kotlin-classes/<variant>" directory.
+     *
+     * Since this directory was never created due to how we are managing the output directories on
+     * compilation tasks (in order to allow AOP weaving to occur), we need to make sure two things
+     * happen:
+     *
+     * 1. Make sure that "extract<Variant>Annotations" task doesn't fail due to a missing directory.
+     * We'll simply make sure this directory exists, as a workaround.
+     *
+     * 2. We need to ensure the actual Kotlin compilation output directory is included in the list
+     * needed by this task. Unfortunately, "classpath" is what we'd like to modify, but it's
+     * immutable. However, looking at the logic in the "ExtractAnnotations" class, it copies
+     * everything from "bootClasspath" to "classpath" before executing. And "bootClasspath" is
+     * mutable. So if we add the true compilation output directory to the "bootClasspath", it will
+     * pick up the compiled classes correctly, and "just work".
+     */
+    private fun configureExtractAnnotationsTask(
+        extractAnnotationsProvider: TaskProvider<ExtractAnnotations>,
+        preWeaveKotlinDir: Provider<Directory>
+    ) {
+        extractAnnotationsProvider.configure {
+            doFirst {
+                classpath.files.forEach {
+                    if (it.path.contains(PATTERN_ORIGINAL_KOTLINC_OUTPUT_DIR) && !it.exists()) {
+                        it.mkdirs()
+                    }
+                }
+            }
+
+            bootClasspath += project.files(preWeaveKotlinDir)
         }
     }
 
