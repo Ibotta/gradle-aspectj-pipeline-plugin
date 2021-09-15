@@ -1,10 +1,10 @@
 package com.ibotta.gradle.aop
 
+import com.android.build.gradle.tasks.ExtractAnnotations
 import com.hiya.plugins.JacocoAndroidUnitTestReportExtension
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.UnknownDomainObjectException
-import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.compile.AbstractCompile
@@ -15,6 +15,7 @@ private const val KAPT_TASK_TEMPLATE = "kapt%sKotlin"
 private const val JAVA_COMPILE_TASK_TEMPLATE = "compile%sJavaWithJavac"
 private const val KOTLIN_COMPILE_TASK_TEMPLATE = "compile%sKotlin"
 private const val JACOCO_REPORT_TASK_TEMPLATE = "jacocoTest%sUnitTestReport"
+private const val EXTRACT_ANNOTATIONS_TASK_TEMPLATE = "extract%sAnnotations"
 private const val JACOCO_ANDROID_REPORT_EXTENSION = "jacocoAndroidUnitTestReport"
 const val LANG_JAVA = "Java"
 const val LANG_KOTLIN = "Kotlin"
@@ -51,6 +52,16 @@ fun Project.jacocoReportTaskProvider(variantName: String): TaskProvider<JacocoRe
 
     return if (jacocoTask != null) {
         jacocoTask as TaskProvider<JacocoReport>
+    } else {
+        null
+    }
+}
+
+fun Project.extractAnnotationsTaskProvider(variantName: String): TaskProvider<ExtractAnnotations>? {
+    val extractAnnotationsTask = tasks.namedOrNull(EXTRACT_ANNOTATIONS_TASK_TEMPLATE.format(variantName))
+
+    return if (extractAnnotationsTask != null) {
+        extractAnnotationsTask as TaskProvider<ExtractAnnotations>
     } else {
         null
     }

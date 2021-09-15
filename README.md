@@ -50,7 +50,7 @@ buildscript {
 
 	dependencies {
 		...
-		classpath "com.ibotta:plugin:1.1.0"
+		classpath "com.ibotta:plugin:1.2.0"
 		...
 	}
 }
@@ -70,7 +70,7 @@ buildscript {
 
 	dependencies {
 		...
-		classpath("com.ibotta:plugin:1.1.0")
+		classpath("com.ibotta:plugin:1.2.0")
 		...
 	}
 }
@@ -134,12 +134,12 @@ aopWeave {
 
 # A Note on Kotlin 1.5+, SAM Conversion, Lambdas and AOP Annotations
 As of Kotlin 1.5.0 the compiler now performs Single Abstract Method (SAM) conversions. This, unfortunately, seems to
-break certain aspects of AspectJ weaving. For an example, please see issue #8.
+break certain aspects of AspectJ weaving. For an example, please see issue [#8](https://github.com/Ibotta/gradle-aspectj-pipeline-plugin/issues/8).
 
 If you have lambdas that aren't being woven correctly by AspectJ, you can work around it by using the following
 compiler option:
 
-```aidl
+```
 kotlinOptions {
     freeCompilerArgs = ["-Xsam-conversions=class"]
 }
@@ -148,9 +148,9 @@ kotlinOptions {
 # We Have Sample Apps!
 In this project, you will find a few sample apps that use this plugin to perform some simple AOP weaving. They include tests to help prove that the weaving occurred, and is running as expected. Maybe you have a Kotlin only project, or Java only, or a mix! We have examples of each:
 
- - [Kotlin Only Sample App](sample-kotlin)
- - [Java Only Sample App](sample-java)
- - [Mixed Java/Kotlin Sample App](sample-mixed)
+- [Kotlin Only Sample App](sample-kotlin)
+- [Java Only Sample App](sample-java)
+- [Mixed Java/Kotlin Sample App](sample-mixed)
 
 # How To Build The Project
 If you've made no code changes to the project, and simply want to build it, then you can just run the following command from the root of the project: `./gradlew build`

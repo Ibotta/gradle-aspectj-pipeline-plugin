@@ -8,7 +8,7 @@ object Plugin {
     const val DISPLAY_NAME = "Android AspectJ Gradle Plugin"
     const val JVM_TARGET = "1.8"
     private const val BUILD_NUMBER = "" // Dynamically updated by publishLocal.sh on Travis. Otherwise left as-is.
-    const val VERSION = "1.1.0$BUILD_NUMBER"
+    const val VERSION = "1.2.0$BUILD_NUMBER"
     val TAGS = listOf("Gradle", "Plugin", "Android", "AspectJ", "Kotlin", "Java")
 }
 
@@ -37,14 +37,14 @@ object Sdk {
 }
 
 object Versions {
-    const val ANDROID_BUILD_TOOLS_VERSION = "4.1.0"
+    const val ANDROID_BUILD_TOOLS_VERSION = "7.0.2"
     const val APPCOMPAT_VERSION = "1.1.0"
     const val ASPECTJ_VERSION = "1.9.6"
     const val GRADLE_PLUGIN_PUBLISH_VERSION = "0.12.0"
     const val JACOCO_ANDROID_VERSION = "0.2"
     const val JUNIT_VERSION = "5.7.0"
     const val KOTLIN_VERSION = "1.4.10"
-    const val KOTLIN_DSL_VERSION = "1.4.1"
+    const val KOTLIN_DSL_VERSION = "2.1.6"
     const val KOTLINX_SERIALIZATION_RUNTIME_VERSION = "0.20.0"
     const val MOCKITO_CORE_VERSION = "3.5.13"
     const val MOCKK_VERSION = "1.10.2"
