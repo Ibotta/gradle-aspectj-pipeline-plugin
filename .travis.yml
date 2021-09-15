@@ -2,19 +2,29 @@ language: android
 os: linux
 dist: trusty
 jdk: openjdk11
+sudo: required
 android:
   components:
     - tools
     - android-30
     - build-tools-30.0.2
+    - extra-android-m2repository
+  licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
 
 before_install:
+  - chmod +x gradlew
   - yes | sdkmanager "platforms;android-30"
+  - yes | sdkmanager "build-tools;30.0.2"
 
 script:
   - rm -Rf $HOME/.m2/repository/com/ibotta/gradle/aop/
   - ./publishLocal.sh
   - ./gradlew build
+
+before_script:
+  - chmod +x gradlew
 
 install: skip
 
