@@ -9,7 +9,7 @@ object Plugin {
     const val JVM_TARGET = "1.8"
     private const val BUILD_NUMBER = "" // Dynamically updated by publishLocal.sh on Travis. Otherwise left as-is.
     const val VERSION = "1.3.0$BUILD_NUMBER"
-    val TAGS = listOf("Gradle", "Plugin", "Android", "AspectJ", "Kotlin", "Java")
+    val TAGS = listOf("Android", "AspectJ", "Kotlin", "Java")
 }
 
 object SampleAppCommon {
