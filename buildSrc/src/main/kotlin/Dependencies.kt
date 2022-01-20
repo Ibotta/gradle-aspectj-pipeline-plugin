@@ -40,7 +40,7 @@ object Versions {
     const val ANDROID_BUILD_TOOLS_VERSION = "7.0.4"
     const val APPCOMPAT_VERSION = "1.4.1"
     const val ASPECTJ_VERSION = "1.9.6"
-    const val GRADLE_PLUGIN_PUBLISH_VERSION = "0.16.0"
+    const val GRADLE_PLUGIN_PUBLISH_VERSION = "0.20.0"
     const val JACOCO_ANDROID_VERSION = "0.2"
     const val JUNIT_VERSION = "5.8.2"
     const val KOTLIN_VERSION = "1.6.10"
