@@ -12,7 +12,6 @@ plugins {
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         mavenLocal()
         maven("https://plugins.gradle.org/m2/")

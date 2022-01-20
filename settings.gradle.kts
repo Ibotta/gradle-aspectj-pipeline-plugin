@@ -14,7 +14,6 @@ pluginManagement {
         google()
         mavenCentral()
         mavenLocal()
-        jcenter()
         maven("https://plugins.gradle.org/m2/")
     }
 }
