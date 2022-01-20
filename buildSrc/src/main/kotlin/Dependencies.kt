@@ -8,7 +8,7 @@ object Plugin {
     const val DISPLAY_NAME = "Android AspectJ Gradle Plugin"
     const val JVM_TARGET = "1.8"
     private const val BUILD_NUMBER = "" // Dynamically updated by publishLocal.sh on Travis. Otherwise left as-is.
-    const val VERSION = "1.2.0$BUILD_NUMBER"
+    const val VERSION = "1.3.0$BUILD_NUMBER"
     val TAGS = listOf("Gradle", "Plugin", "Android", "AspectJ", "Kotlin", "Java")
 }
 
