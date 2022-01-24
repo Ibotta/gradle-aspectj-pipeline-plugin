@@ -3,6 +3,7 @@ package com.ibotta.gradle.aop
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.DynamicFeaturePlugin
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
 import com.android.build.gradle.tasks.ExtractAnnotations
@@ -44,8 +45,9 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         val isAndroid = project.plugins.hasPlugin(AppPlugin::class.java)
         val isLibrary = project.plugins.hasPlugin(LibraryPlugin::class.java)
+        val isDynamicLibrary = project.plugins.hasPlugin(DynamicFeaturePlugin::class.java)
 
-        if (!isAndroid && !isLibrary) {
+        if (!isAndroid && !isLibrary && !isDynamicLibrary) {
             throw GradleException(MISSING_PLUGIN_ERROR)
         }
 
@@ -53,9 +55,9 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
 
         val extension = project.extensions.create(AopWeaveExtension.AOP_WEAVE_EXTENSION, AopWeaveExtension::class.java)
         val android = project.extensions.findByName(ANDROID_EXTENSION_NAME) as BaseExtension
-
+        project.aopLog("projectId: $$project")
         project.afterEvaluate {
-            val variants = if (isAndroid) {
+            val variants = if (isAndroid or isDynamicLibrary) {
                 (android as AppExtension).applicationVariants
             } else {
                 (android as LibraryExtension).libraryVariants
@@ -82,7 +84,7 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
                 val postWeaveDir = project.layout
                     .buildDirectory
                     .dir(POST_WEAVE_DIR_TEMPLATE.format(variantNameLowercase))
-
+                project.aopLog("output dir ${postWeaveDir.get().asFile.absolutePath}")
                 // Now we'll acquire the Task providers for the compilation steps, as well as our own custom weave
                 // task. Task providers allow us to tell Gradle how we will want the tasks to be configured and executed,
                 // before the tasks exists.
