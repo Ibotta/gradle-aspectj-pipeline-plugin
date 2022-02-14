@@ -93,6 +93,7 @@ android {
 }
 
 dependencies {
+        implementation "org.aspectj:aspectjrt:1.9.6"
 	...
 }
 
@@ -119,6 +120,7 @@ android {
 }
 
 dependencies {
+        implementation("org.aspectj:aspectjrt:1.9.6")
 	...
 }
 
