@@ -6,4 +6,5 @@ open class AopWeaveExtension {
     }
 
     var filter = ""
+    var regexpFilter = ""
 }
