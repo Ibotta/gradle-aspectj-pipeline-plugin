@@ -1,7 +1,7 @@
 import com.ibotta.gradle.aop.AopWeaveExtension
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
     id("kotlin-android-extensions")
     id(Plugin.PLUGIN_ID) version Plugin.VERSION apply false
@@ -15,10 +15,6 @@ android {
     defaultConfig {
         minSdkVersion(Sdk.MIN_SDK_VERSION)
         targetSdkVersion(Sdk.TARGET_SDK_VERSION)
-
-        applicationId = KotlinApp.APP_ID
-        versionCode = SampleAppCommon.APP_VERSION_CODE
-        versionName = SampleAppCommon.APP_VERSION_NAME
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -52,13 +48,4 @@ dependencies {
     implementation(kotlin("stdlib-jdk7"))
     implementation(Dependencies.ASPECT_J_RUNTIME)
     implementation(SupportLibs.ANDROIDX_APPCOMPAT)
-    implementation(project(":sample-module"))
-
-    testImplementation(platform(Dependencies.JUNIT_BOM))
-    testImplementation(Dependencies.JUNIT_JUPITER)
-    testImplementation(Dependencies.MOCKK)
-}
-
-configure<AopWeaveExtension> {
-    filter = SampleAppCommon.FILTER
 }

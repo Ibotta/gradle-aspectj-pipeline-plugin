@@ -1,4 +1,4 @@
-package com.ibotta.gradle.aop.kotlin
+package com.ibotta.gradle.aop
 
 enum class CallerType {
     BEFORE_HOOK,

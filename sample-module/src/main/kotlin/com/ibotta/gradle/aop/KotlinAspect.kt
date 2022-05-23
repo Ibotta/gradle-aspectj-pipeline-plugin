@@ -1,4 +1,4 @@
-package com.ibotta.gradle.aop.kotlin
+package com.ibotta.gradle.aop
 
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.After
