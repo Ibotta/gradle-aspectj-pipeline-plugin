@@ -49,3 +49,7 @@ dependencies {
     implementation(Dependencies.ASPECT_J_RUNTIME)
     implementation(SupportLibs.ANDROIDX_APPCOMPAT)
 }
+
+configure<AopWeaveExtension> {
+    filter = SampleAppCommon.FILTER
+}

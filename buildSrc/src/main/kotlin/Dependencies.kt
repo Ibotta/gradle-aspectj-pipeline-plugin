@@ -15,7 +15,7 @@ object Plugin {
 object SampleAppCommon {
     const val APP_VERSION_CODE = 1
     const val APP_VERSION_NAME = "1.0.0"
-    const val FILTER = "com/ibotta/gradle/aop"
+    const val FILTER = "gradle-aspectj-pipeline-plugin"
 }
 
 object MixedApp {

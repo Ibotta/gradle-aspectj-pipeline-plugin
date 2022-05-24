@@ -3,9 +3,10 @@ package com.ibotta.gradle.aop.kotlin
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ibotta.gradle.aop.CallerType
+import com.ibotta.gradle.aop.MessageListener
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), com.ibotta.gradle.aop.MessageListener {
+class MainActivity : AppCompatActivity(), MessageListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

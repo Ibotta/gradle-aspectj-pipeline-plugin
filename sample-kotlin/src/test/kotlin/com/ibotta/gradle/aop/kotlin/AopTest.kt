@@ -1,6 +1,6 @@
 package com.ibotta.gradle.aop.kotlin
 
-import CallerType
+import com.ibotta.gradle.aop.CallerType
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
