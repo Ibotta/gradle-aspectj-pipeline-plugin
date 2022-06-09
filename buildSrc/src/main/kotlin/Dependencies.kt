@@ -37,13 +37,13 @@ object Sdk {
 }
 
 object Versions {
-    const val ANDROID_BUILD_TOOLS_VERSION = "7.0.4"
+    const val ANDROID_BUILD_TOOLS_VERSION = "7.2.1"
     const val APPCOMPAT_VERSION = "1.4.1"
-    const val ASPECTJ_VERSION = "1.9.6"
+    const val ASPECTJ_VERSION = "1.9.7"
     const val GRADLE_PLUGIN_PUBLISH_VERSION = "0.20.0"
     const val JACOCO_ANDROID_VERSION = "0.2"
     const val JUNIT_VERSION = "5.8.2"
-    const val KOTLIN_VERSION = "1.6.10"
+    const val KOTLIN_VERSION = "1.7.0"
     const val KOTLIN_DSL_VERSION = "2.2.0"
     const val KOTLINX_SERIALIZATION_RUNTIME_VERSION = "0.20.0"
     const val MOCKITO_CORE_VERSION = "4.2.0"

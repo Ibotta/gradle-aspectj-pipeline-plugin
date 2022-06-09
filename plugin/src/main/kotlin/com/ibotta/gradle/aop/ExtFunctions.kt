@@ -2,6 +2,7 @@ package com.ibotta.gradle.aop
 
 import com.android.build.gradle.tasks.ExtractAnnotations
 import com.hiya.plugins.JacocoAndroidUnitTestReportExtension
+import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.UnknownDomainObjectException
@@ -9,6 +10,7 @@ import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.compile.AbstractCompile
 import org.gradle.testing.jacoco.tasks.JacocoReport
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.File
 
 private const val KAPT_TASK_TEMPLATE = "kapt%sKotlin"
@@ -23,20 +25,10 @@ const val LANG_KOTLIN = "Kotlin"
 fun Project.aopLog(msg: String) = logger.warn("/** Ibotta AOP **/: $msg")
 
 fun Project.javaCompileTask(variantName: String): AbstractCompile? =
-    compileTask(JAVA_COMPILE_TASK_TEMPLATE.format(variantName))
+    firstTask(JAVA_COMPILE_TASK_TEMPLATE.format(variantName))  as? AbstractCompile
 
-fun Project.kotlinCompileTask(variantName: String): AbstractCompile? =
-    compileTask(KOTLIN_COMPILE_TASK_TEMPLATE.format(variantName))
-
-private fun Project.compileTask(taskName: String): AbstractCompile? {
-    val firstTask = firstTask(taskName)
-
-    return if (firstTask != null) {
-        firstTask as AbstractCompile
-    } else {
-        null
-    }
-}
+fun Project.kotlinCompileTask(variantName: String): KotlinCompile? =
+    firstTask(KOTLIN_COMPILE_TASK_TEMPLATE.format(variantName)) as? KotlinCompile?
 
 fun Project.kaptTaskProvider(variantName: String) =
     tasks.namedOrNull(KAPT_TASK_TEMPLATE.format(variantName))
