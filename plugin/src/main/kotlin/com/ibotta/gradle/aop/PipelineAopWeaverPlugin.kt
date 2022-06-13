@@ -18,6 +18,7 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.compile.AbstractCompile
 import org.gradle.testing.jacoco.tasks.JacocoReport
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
  * A Gradle plugin that performs AOP weaving using a technique recommended by Gradle reps. It taps into Android's
@@ -311,25 +312,45 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
         }
     }
 
-    private fun restoreIncrementalBehaviorAction(compileTask: AbstractCompile, preWeaveDir: Provider<Directory>) {
+    private fun restoreIncrementalBehaviorAction(compileTask: Task, preWeaveDir: Provider<Directory>) {
         if (!preWeaveDir.get().asFile.isEmpty()) {
-            compileTask.apply {
-                project.copy {
-                    from(preWeaveDir)
-                    into(destinationDirectory)
+            if (compileTask is AbstractCompile) {
+                compileTask.apply {
+                    project.copy {
+                        from(preWeaveDir)
+                        into(destinationDirectory)
+                    }
+                }
+            } else if (compileTask is KotlinCompile) {
+                compileTask.apply {
+                    project.copy {
+                        from(preWeaveDir)
+                        into(destinationDirectory)
+                    }
                 }
             }
         }
     }
 
-    private fun cleanUpAfterWeaving(compileTask: AbstractCompile, preWeaveDir: Provider<Directory>) {
-        compileTask.apply {
-            project.copy {
-                from(destinationDirectory)
-                into(preWeaveDir)
-            }
+    private fun cleanUpAfterWeaving(compileTask: Task, preWeaveDir: Provider<Directory>) {
+        if (compileTask is KotlinCompile) {
+            compileTask.apply {
+                project.copy {
+                    from(destinationDirectory)
+                    into(preWeaveDir)
+                }
 
-            project.delete(destinationDir)
+                project.delete(destinationDirectory)
+            }
+        } else if (compileTask is AbstractCompile) {
+            compileTask.apply {
+                project.copy {
+                    from(destinationDirectory)
+                    into(preWeaveDir)
+                }
+
+                project.delete(destinationDirectory)
+            }
         }
     }
 
@@ -345,12 +366,12 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
         return when {
             ((javaCompileTask != null) && (kotlinCompileTask != null)) -> project.files(
                 javaCompileTask.classpath,
-                kotlinCompileTask.classpath,
+                kotlinCompileTask.libraries,
                 preWeaveJavaDir.get().asFile,
                 preWeaveKotlinDir.get().asFile
             )
             (javaCompileTask != null) -> project.files(javaCompileTask.classpath, preWeaveJavaDir.get().asFile)
-            (kotlinCompileTask != null) -> project.files(kotlinCompileTask.classpath, preWeaveKotlinDir.get().asFile)
+            (kotlinCompileTask != null) -> project.files(kotlinCompileTask.libraries, preWeaveKotlinDir.get().asFile)
             else -> throw RuntimeException("Either Java, Kotlin, or both types of compile task must be present.")
         }
     }
@@ -362,28 +383,28 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
         return when {
             ((javaCompileTask != null) && (kotlinCompileTask != null)) -> project.files(
                 javaCompileTask.classpath,
-                kotlinCompileTask.classpath
+                kotlinCompileTask.libraries
             )
             (javaCompileTask != null) -> project.files(javaCompileTask.classpath)
-            (kotlinCompileTask != null) -> project.files(kotlinCompileTask.classpath)
+            (kotlinCompileTask != null) -> project.files(kotlinCompileTask.libraries)
             else -> throw RuntimeException("Either Java, Kotlin, or both types of compile task must be present.")
         }
     }
 
     private fun Task.swapPreWeaveContent(compileTaskProvider: TaskProvider<Task>?, preWeaveDir: Provider<Directory>) {
         if (compileTaskProvider != null) {
-            val compileTask = compileTaskProvider.get() as AbstractCompile
+            val compileTask = compileTaskProvider.get()
             swapPreWeaveContent(compileTask, preWeaveDir)
         }
     }
 
     private fun Task.swapPreWeaveContent(compileTask: Task, preWeaveDir: Provider<Directory>) {
         doFirst {
-            restoreIncrementalBehaviorAction(compileTask as AbstractCompile, preWeaveDir)
+            restoreIncrementalBehaviorAction(compileTask, preWeaveDir)
         }
 
         doLast {
-            cleanUpAfterWeaving(compileTask as AbstractCompile, preWeaveDir)
+            cleanUpAfterWeaving(compileTask, preWeaveDir)
         }
     }
 }

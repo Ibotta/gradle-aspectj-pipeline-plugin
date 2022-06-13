@@ -34,9 +34,9 @@ android {
         }
     }
 
-    lintOptions {
-        isWarningsAsErrors = false
-        isAbortOnError = true
+    lint {
+        warningsAsErrors = false
+        abortOnError = true
     }
 
     sourceSets.getByName("main") {
