@@ -3,7 +3,9 @@ import com.ibotta.gradle.aop.AopWeaveExtension
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
     id("kotlin-android-extensions")
+    id("com.google.dagger.hilt.android") version "2.42"
     id(Plugin.PLUGIN_ID) version Plugin.VERSION apply false
 }
 
@@ -52,6 +54,9 @@ dependencies {
     implementation(kotlin("stdlib-jdk7"))
     implementation(Dependencies.ASPECT_J_RUNTIME)
     implementation(SupportLibs.ANDROIDX_APPCOMPAT)
+    implementation("com.google.dagger:hilt-android:2.42")
+    kapt("com.google.dagger:hilt-android-compiler:2.42")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     testImplementation(platform(Dependencies.JUNIT_BOM))
     testImplementation(Dependencies.JUNIT_JUPITER)
