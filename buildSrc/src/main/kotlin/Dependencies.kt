@@ -32,22 +32,22 @@ object JavaApp {
 
 object Sdk {
     const val MIN_SDK_VERSION = 21
-    const val TARGET_SDK_VERSION = 31
-    const val COMPILE_SDK_VERSION = 31
+    const val TARGET_SDK_VERSION = 33
+    const val COMPILE_SDK_VERSION = 33
 }
 
 object Versions {
-    const val ANDROID_BUILD_TOOLS_VERSION = "7.2.1"
-    const val APPCOMPAT_VERSION = "1.4.1"
+    const val ANDROID_BUILD_TOOLS_VERSION = "7.3.0"
+    const val APPCOMPAT_VERSION = "1.5.1"
     const val ASPECTJ_VERSION = "1.9.7"
-    const val GRADLE_PLUGIN_PUBLISH_VERSION = "0.20.0"
+    const val GRADLE_PLUGIN_PUBLISH_VERSION = "1.0.0-rc-1"
     const val JACOCO_ANDROID_VERSION = "0.2"
-    const val JUNIT_VERSION = "5.8.2"
-    const val KOTLIN_VERSION = "1.7.0"
-    const val KOTLIN_DSL_VERSION = "2.2.0"
+    const val JUNIT_VERSION = "5.9.1"
+    const val KOTLIN_VERSION = "1.7.10"
+    const val KOTLIN_DSL_VERSION = "3.1.0"
     const val KOTLINX_SERIALIZATION_RUNTIME_VERSION = "0.20.0"
-    const val MOCKITO_CORE_VERSION = "4.2.0"
-    const val MOCKK_VERSION = "1.12.2"
+    const val MOCKITO_CORE_VERSION = "4.8.0"
+    const val MOCKK_VERSION = "1.13.1"
 }
 
 object SupportLibs {
