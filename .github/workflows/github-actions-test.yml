@@ -1,0 +1,25 @@
+name: Android Publish
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Up JDK
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: Change script permissions
+        run: |
+          chmod +x ./gradlew
+          chmod +x ./publishLocal.sh
+
+      - name: Build
+        run: |
+          rm -Rf $HOME/.m2/repository/com/ibotta/gradle/aop/
+          ./publishLocal.sh
+          ./gradlew build
