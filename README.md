@@ -1,11 +1,9 @@
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# WARNING: This project is **NO LONGER MAINTAINED**. The API for bytecode transformation is
-# being [removed](https://www.infoq.com/news/2022/10/android-grade-plugin-8/) in Android Gradle Plugin 8.0.
-# This, coupled with the fact that Ibotta is moving away from AOP, means we will no longer be
-# maintaining this project. If you have interest in possibly taking over this project, please
-# reach out and let us know.
+# WARNING: This project is **NO LONGER MAINTAINED**. 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+The API for bytecode transformation is being [removed](https://www.infoq.com/news/2022/10/android-grade-plugin-8/) in Android Gradle Plugin 8.0.
+This, coupled with the fact that Ibotta is moving away from AOP, means we will no longer be maintaining this project. If you have interest in possibly taking over this project, please reach out and let us know.
 
 # Android AspectJ Gradle Plugin
 A Gradle plugin for Kotlin/Java Android projects which performs AspectJ weaving using Android's bytcode manipulation pipeline.
