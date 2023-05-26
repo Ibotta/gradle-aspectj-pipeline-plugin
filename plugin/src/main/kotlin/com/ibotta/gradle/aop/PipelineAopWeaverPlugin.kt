@@ -286,12 +286,21 @@ class PipelineAopWeaverPlugin : Plugin<Project> {
             aspectPathResolver = {
                 project.files(gatherAspectPaths(project, variantNameCapitalized, preWeaveJavaDir, preWeaveKotlinDir))
                     .also {
-                        if (extension.filter.isNotEmpty()) {
+                        if (extension.regexpFilter.isNotEmpty()) {
+                            project.aopLog("Weaving regexp filter in ${project.name} is: ${extension.regexpFilter}")
+                        } else if (extension.filter.isNotEmpty()) {
                             project.aopLog("Weaving filter in ${project.name} is: ${extension.filter}")
                         }
                     }
                     .filter { file ->
-                        file.canonicalPath.contains(extension.filter)
+                        var includeFile = true;
+                        if (extension.regexpFilter.isNotEmpty()) {
+                            includeFile = file.canonicalPath.contains(Regex(extension.regexpFilter))
+                        } else if (extension.filter.isNotEmpty()) {
+                            includeFile = file.canonicalPath.contains(extension.filter)
+                        }
+                        if (includeFile) project.aopLog("Weaving file: ${file.canonicalPath}")
+                        return@filter includeFile
                     }
             }
             classPathResolver = { gatherClasspaths(project, variantNameCapitalized) }
