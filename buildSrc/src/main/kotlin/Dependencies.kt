@@ -4,7 +4,7 @@ object Plugin {
     const val NAME = "aopWeaverPipeline"
     const val IMPLEMENTATION_CLASS = "$PLUGIN_ID.PipelineAopWeaverPlugin"
     const val WEBSITE = "https://github.com/Ibotta/gradle-aspectj-pipeline-plugin"
-    const val DESCRIPTION = "A Gradle plugin for Android projects which performs AspectJ weaving using Android's bytcode manipulation pipeline."
+    const val DESCRIPTION = "A Gradle plugin for Android projects which performs AspectJ weaving using Android's bytecode manipulation pipeline."
     const val DISPLAY_NAME = "Android AspectJ Gradle Plugin"
     const val JVM_TARGET = "1.8"
     private const val BUILD_NUMBER = "" // Dynamically updated by publishLocal.sh on Travis. Otherwise left as-is.
